@@ -1,4 +1,5 @@
 import json
+import time
 
 def scoreboard(score):
     try:
@@ -14,6 +15,7 @@ def scoreboard(score):
         Name=list[i]["name"]
         Score=list[i]["score"]
         print(f"{i+1:<5} {Name:<12} {Score:<10}")
+        time.sleep(0.5)
     print("="*30)
     if len(list)>=10 and score<list[9]["score"] or len(list)<10:
         print(f"Gratulálok! Csupán {score} tippre volt szükséged, amivel bebiztosítottad a helyed a Top 10-ben!")

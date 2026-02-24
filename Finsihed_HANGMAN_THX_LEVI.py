@@ -24,12 +24,13 @@ def scoreboard(score):
         Name=list[i]["name"]
         Score=list[i]["score"]
         print(f"{i+1:<5} {Name:<12} {Score:<10}")
+        time.sleep(0.2)
     print("="*30)
     if len(list)>=10 and score<list[9]["score"] or len(list)<10:
         print(f"Gratulálok! Csupán {score} tippre volt szükséged, amivel bebiztosítottad a helyed a Top 10-ben!")
         adat=str(input("Adj meg egy nevet vagy nyomj Entert:")).strip()
         if adat!="":
-            list.append({"name":adat, "score":score})
+            list.append({"name":adat, "score":score,})
             list.sort(key=lambda x: x["score"],)
             with open ("scoreboard.json","w") as f:
                 json.dump(list, f, indent=4,)
@@ -45,8 +46,8 @@ def pick_random_pair():
         y=y.lstrip()
         orszag.append(x)
         capital.append(y)
-    ran_country= random.randint((len(orszag)))
-    ran_capital= random.randint((len(capital)))
+    ran_country= random.randint(0, (len(orszag)))
+    ran_capital= random.randint(0, (len(capital)))
     return orszag[ran_country], capital[ran_capital]
 # hiddenbe konvertálás
 def mask_word(word, guessed):
@@ -72,13 +73,13 @@ def play_one_round(secret_word, label): #secret word
         if guess in guessed:    # nem lehet egy betűt többször tippelni
             print("Már tippelted ezt a betűt.") 
             continue
-
+        score=score+1
         guessed.add(guess)
 
         if guess in secret_word.lower():
             if all(ch.lower() in guessed or ch == " " for ch in secret_word):
                 print(f"\nGratulálok! Kitaláltad a(z) {label.lower()}: {secret_word}")
-                score=score+1
+                
                 scoreboard(score)
                 return True
         else:
